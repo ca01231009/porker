@@ -1,0 +1,5 @@
+.clicked{
+    background-color: blue;
+    opacity: 0.5; /** 画像の透明度 */
+    display: block;
+  }
