@@ -10,7 +10,31 @@
 </head>
 
 <body>
-    
+    <form name="form1">
+        <br>
+        <input type="button" name="startbutton" id="startbutton" value="開始" onclick="start()">
+        <!-- <input type="button" name="drawbutton" value="手札を引く" onclick="first()"> -->
+        <input type="button" name="changebutton" id="changebutton" value="交換する" onclick="change()">
+        <input type="button" name="judgebutton" id="judgebutton" value="勝負する" onclick="showdown(my_rank, my_hand, cpu_rank, cpu_hand)">
+        <select name="difficulty" id="difficulty">
+            <option value="0">EASY</option>
+            <option value="1">NORMAL</option>
+        </select>
+        <input type="button" name="onemorebutton" id="onemorebutton" value="もう一度する？" onclick="location.reload()">
+    </form>
+
+    <div id="cpu_disp"></div>
+    <div id="cpu_rank_name"></div>
+    <!-- <div id="deck"></div> -->
+
+    <div id="disp">
+    </div>
+    <div id="rank_name"></div>
+    <div id="result"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="poker.js"></script>
+    <script src="rank.js"></script>
+    <script src="cpu_change.js"></script>
 </body>
 
 </html>
