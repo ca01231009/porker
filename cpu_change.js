@@ -198,4 +198,36 @@ sameThreeMark = (cpu_hand) => {
 //ワンペア時、ペアの2枚を取る
 onePairSampling = (cpu_hand) => {
     sort(cpu_hand);
+    for (var i = 0; cpu_hand[i].num != cpu_hand[i + 1].num; i++) {};
+    cpu_hand = cpu_hand.splice(i,2);
+    return cpu_hand;
+}
+
+//ツーペア時、残りの一枚を抜き取る
+twoPairSampling = (cpu_hand) => {
+    sort(cpu_hand);
+    if (cpu_hand[1].num == cpu_hand[2].num && cpu_hand[3].num == cpu_hand[4].num) {
+        cpu_hand.splice(0, 1);
+        return cpu_hand;
+    } else if (cpu_hand[0].num == cpu_hand[1].num && cpu_hand[3].num == cpu_hand[4].num) {
+        cpu_hand.splice(2, 1);
+        return cpu_hand;
+    } else if (cpu_hand[0].num == cpu_hand[1].num && cpu_hand[2].num == cpu_hand[3].num) {
+        cpu_hand.splice(4, 1);
+    };
+    return cpu_hand;
+}
+
+//スリーカード時に三枚を抜き出す
+threeCardSampling = (cpu_hand) => {
+    sort(cpu_hand);
+    if (cpu_hand[0].num == cpu_hand[1].num && cpu_hand[1].num == cpu_hand[2].num) {
+        cpu_hand.splice(3, 2);
+    } else if (cpu_hand[1].num == cpu_hand[2].num && cpu_hand[2].num == cpu_hand[3].num) {
+        cpu_hand.splice(0, 1);
+        cpu_hand.splice(3, 1);
+    } else if (cpu_hand[2].num == cpu_hand[3].num && cpu_hand[3].num == cpu_hand[4].num) {
+        cpu_hand.splice(0, 2);
+    };
+    return cpu_hand;
 }
