@@ -231,3 +231,20 @@ threeCardSampling = (cpu_hand) => {
     };
     return cpu_hand;
 }
+//ジョーカー所持時、３枚で階段もどきが出来るか？
+onePairstairMock = (cpu_hand) => {
+    sort(cpu_hand);
+    let cpu_hand2 = cpu_hand.slice();
+    let joker_flg = 1;
+    for (var i = 0; i < 5; i++) {
+        cpu_hand2.splice(i, 1);
+        if (jokerStairsMockJudge(cpu_hand2, joker_flg)) {
+            returnAce(cpu_hand2);
+            return cpu_hand2;
+            break;
+        };
+        cpu_hand2 = cpu_hand.slice();
+    };
+    joker_flg = 0;
+    return cpu_hand2;
+}
