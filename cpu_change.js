@@ -231,6 +231,7 @@ threeCardSampling = (cpu_hand) => {
     };
     return cpu_hand;
 }
+
 //ジョーカー所持時、３枚で階段もどきが出来るか？
 onePairstairMock = (cpu_hand) => {
     sort(cpu_hand);
@@ -248,3 +249,13 @@ onePairstairMock = (cpu_hand) => {
     joker_flg = 0;
     return cpu_hand2;
 }
+
+
+jokerStairsMockJudge = (my_hand, joker_flg) => {
+    if (stairs(my_hand)) {
+        return true;
+    } else if (joker_flg == 1) {
+        if (jokerStairsMock(my_hand)) {
+            return true;
+        } else {
+            changeAce(my_hand);
