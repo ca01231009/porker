@@ -274,3 +274,11 @@ jokerStairsMockJudge = (my_hand, joker_flg) => {
         };
     };
 }
+jokerStairsMock = (cpu_hand) => {
+    if ((cpu_hand[2].num - cpu_hand[1].num == 2 && cpu_hand[1].num - cpu_hand[0].num == 1) ||
+        (cpu_hand[2].num - cpu_hand[1].num == 1 && cpu_hand[1].num - cpu_hand[0].num == 2)) {
+        return true;
+    } else {
+        return false;
+    };
+}
