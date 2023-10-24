@@ -290,3 +290,10 @@ jokerThreeCardSampling = (cpu_hand) => {
     if (cpu_hand[0].num == cpu_hand[1].num) {
         cpu_hand.splice(2, 2);
     } else if (cpu_hand[1].num == cpu_hand[2].num) {
+        cpu_hand.splice(0, 1);
+        cpu_hand.splice(2, 1);
+    } else if (cpu_hand[2].num == cpu_hand[3].num) {
+        cpu_hand.splice(2, 2);
+    };
+    return cpu_hand;
+}
