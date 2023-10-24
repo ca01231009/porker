@@ -274,6 +274,7 @@ jokerStairsMockJudge = (my_hand, joker_flg) => {
         };
     };
 }
+
 jokerStairsMock = (cpu_hand) => {
     if ((cpu_hand[2].num - cpu_hand[1].num == 2 && cpu_hand[1].num - cpu_hand[0].num == 1) ||
         (cpu_hand[2].num - cpu_hand[1].num == 1 && cpu_hand[1].num - cpu_hand[0].num == 2)) {
@@ -282,3 +283,10 @@ jokerStairsMock = (cpu_hand) => {
         return false;
     };
 }
+
+//ジョーカー所持時、ペア2枚を抜き出す
+jokerThreeCardSampling = (cpu_hand) => {
+    sort(cpu_hand);
+    if (cpu_hand[0].num == cpu_hand[1].num) {
+        cpu_hand.splice(2, 2);
+    } else if (cpu_hand[1].num == cpu_hand[2].num) {
