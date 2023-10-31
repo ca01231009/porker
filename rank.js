@@ -25,13 +25,14 @@ rank_judge = (my_hand) => {
             };
         };
     };
-
+    
     returnAce(my_hand);
     if (joker_flg == 1) {
         my_hand.push(new Card(4, 15));
     };
     return current_rank;
 }
+
 
 //最初に並べ替え
 sort = (my_hand) => {
@@ -51,6 +52,103 @@ joker_judge = (my_hand, joker_flg) => {
     return joker_flg;
 }
 
+//階段判定
+stairs_judge = (my_hand, joker_flg) => {
+    if (stairs(my_hand)) {
+        return true;
+    } else if (joker_flg == 1) {
+        if (joker_stairs(my_hand)) {
+            return true;
+        } else {
+            changeAce(my_hand);
+            if (joker_stairs(my_hand)) {
+                return true;
+            } else {
+                return false;
+            };
+        };
+    } else {
+        changeAce(my_hand);
+        if (stairs(my_hand)) {
+            return true;
+        } else {
+            return false;
+        };
+    };
+}
+
+//数字は階段？
+stairs = (my_hand) => {
+    let i = my_hand.length;
+    while (my_hand[i - 1].num - my_hand[i - 2].num == 1) {
+        i--;
+        if (i == 1) {
+            break;
+        };
+    };
+    if (i == 1) {
+        return true;
+    } else {
+        return false;
+    };
+}
+
+//Aの変換関数
+changeAce = (my_hand) => {
+    sort(my_hand);
+    while (my_hand[0].num == 1) {
+        my_hand[0].num += 13;
+        sort(my_hand);
+    };
+}
+
+//Aを戻す関数
+returnAce = (my_hand) => {
+    sort(my_hand);
+    while (my_hand[my_hand.length - 1].num == 14) {
+        my_hand[my_hand.length - 1].num -= 13;
+        sort(my_hand);
+    };
+}
+
+//JOKER使えば作れる？
+joker_stairs = (my_hand) => {
+    if ((my_hand[3].num - my_hand[2].num == 2 && my_hand[2].num - my_hand[1].num == 1 && my_hand[1].num - my_hand[0].num == 1) ||
+        (my_hand[3].num - my_hand[2].num == 1 && my_hand[2].num - my_hand[1].num == 2 && my_hand[1].num - my_hand[0].num == 1) ||
+        (my_hand[3].num - my_hand[2].num == 1 && my_hand[2].num - my_hand[1].num == 1 && my_hand[1].num - my_hand[0].num == 2)) {
+        return true;
+    } else {
+        return false;
+    };
+}
+
+//マークは全て同じ？
+sameMark = (my_hand) => {
+    let i = 0;
+    while (my_hand[i].mark == my_hand[i + 1].mark) {
+        i++;
+        if (i == my_hand.length - 1) {
+            break;
+        };
+    };
+    if (i == my_hand.length - 1) {
+        return true;
+    } else {
+        return false;
+    };
+}
+
+//ロイヤルストレートフラッシュ判定
+rsf = (my_hand, current_rank) => {
+    if (my_hand[0].num == 10 || my_hand[my_hand.length - 1].num == 14) {
+        current_rank = 1;
+        return current_rank;
+    } else {
+        current_rank = 2;
+        return current_rank;
+    };
+}
+
 //同じ数字の枚数判定
 sameNum = (my_hand) => {
     let cnt = 0;
@@ -61,7 +159,6 @@ sameNum = (my_hand) => {
     };
     return cnt;
 }
-
 
 //階段以外の約判定
 various_rank = (my_hand, cnt, current_rank, joker_flg) => {
@@ -147,105 +244,6 @@ various_rank = (my_hand, cnt, current_rank, joker_flg) => {
     };
 }
 
-//マークは全て同じ？
-sameMark = (my_hand) => {
-    let i = 0;
-    while (my_hand[i].mark == my_hand[i + 1].mark) {
-        i++;
-        if (i == my_hand.length - 1) {
-            break;
-        };
-    };
-    if (i == my_hand.length - 1) {
-        return true;
-    } else {
-        return false;
-    };
-}
-
-
-//階段判定
-stairs_judge = (my_hand, joker_flg) => {
-    if (stairs(my_hand)) {
-        return true;
-    } else if (joker_flg == 1) {
-        if (joker_stairs(my_hand)) {
-            return true;
-        } else {
-            changeAce(my_hand);
-            if (joker_stairs(my_hand)) {
-                return true;
-            } else {
-                return false;
-            };
-        };
-    } else {
-        changeAce(my_hand);
-        if (stairs(my_hand)) {
-            return true;
-        } else {
-            return false;
-        };
-    };
-}
-
-//数字は階段？
-stairs = (my_hand) => {
-    let i = my_hand.length;
-    while (my_hand[i - 1].num - my_hand[i - 2].num == 1) {
-        i--;
-        if (i == 1) {
-            break;
-        };
-    };
-    if (i == 1) {
-        return true;
-    } else {
-        return false;
-    };
-}
-
-//Aの変換関数
-changeAce = (my_hand) => {
-    sort(my_hand);
-    while (my_hand[0].num == 1) {
-        my_hand[0].num += 13;
-        sort(my_hand);
-    };
-}
-
-//Aを戻す関数
-returnAce = (my_hand) => {
-    sort(my_hand);
-    while (my_hand[my_hand.length - 1].num == 14) {
-        my_hand[my_hand.length - 1].num -= 13;
-        sort(my_hand);
-    };
-}
-
-//JOKER使えば作れる？
-joker_stairs = (my_hand) => {
-    if ((my_hand[3].num - my_hand[2].num == 2 && my_hand[2].num - my_hand[1].num == 1 && my_hand[1].num - my_hand[0].num == 1) ||
-        (my_hand[3].num - my_hand[2].num == 1 && my_hand[2].num - my_hand[1].num == 2 && my_hand[1].num - my_hand[0].num == 1) ||
-        (my_hand[3].num - my_hand[2].num == 1 && my_hand[2].num - my_hand[1].num == 1 && my_hand[1].num - my_hand[0].num == 2)) {
-        return true;
-    } else {
-        return false;
-    };
-}
-
-//ロイヤルストレートフラッシュ判定
-rsf = (my_hand, current_rank) => {
-    if (my_hand[0].num == 10 || my_hand[my_hand.length - 1].num == 14) {
-        current_rank = 1;
-        return current_rank;
-    } else {
-        current_rank = 2;
-        return current_rank;
-    };
-}
-
-
 //役名表示
 disp_rank = (my_rank, my_rank_name) => {
     switch (my_rank) {
@@ -296,31 +294,3 @@ disp_rank = (my_rank, my_rank_name) => {
     // $("#rank_name").text(my_rank_name);
     return my_rank_name;
 }
-
-//表示カードをクリックしたら画像変更＆class付与
-$("#disp").on("click", "img", function () {
-    $(this).toggleClass("clicked");
-});
-
-  //交換するボタン
-change = () => {
-    let cnt = $(".clicked").length;
-    for (let i = 0; i < cnt; i++) {
-        let card_src = $(`.clicked:eq(${i})`).attr("src");
-        card_src = card_src.split("_");
-        card_src[0] = card_src[0].replace("img/", "");
-        card_src[1] = card_src[1].replace(".png", "");
-        my_hand.some(function (v, i) {
-            if (v.mark == card_src[0] && v.num == card_src[1]) my_hand.splice(i, 1); //id:3の要素を削除
-        });
-    }
-    $(".clicked").remove();
-    let addarray = cards.slice(0, cnt);
-    dispCard(addarray);
-    Array.prototype.push.apply(my_hand, addarray);
-    cards.splice(0, cnt);
-    my_rank_name = rank(my_hand);
-    $("#rank_name").text(my_rank_name);
-    $("#changebutton").hide();
-}
-
